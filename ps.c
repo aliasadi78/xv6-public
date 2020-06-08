@@ -3,6 +3,12 @@
 #include "user.h"
 #include "param.h"
 
+//int
+//main(int argc,char *argv[])
+//{
+//    procinfo();
+//    exit();
+//}
 int
 main(void)
 {

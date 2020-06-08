@@ -9,7 +9,10 @@ struct spinlock;
 struct sleeplock;
 struct stat;
 struct superblock;
-struct proc_info;
+struct proc_info{
+    int pid;
+    int memsize;
+};
 // bio.c
 void            binit(void);
 struct buf*     bread(uint, uint);

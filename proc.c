@@ -532,7 +532,6 @@ procdump(void)
     cprintf("\n");
   }
 }
-
 void
 procinfo(struct proc_info * sproclist)
 {

@@ -94,7 +94,7 @@ int
 sys_pinfo(void)
 {
     struct proc_info *pi;
-    if(argptr(0,(void*)&pi, sizeof(*pi)) < 0)
+    if(argptr(0,(void*)&pi, sizeof(pi)) < 0)
         return -1;
     procinfo(pi);
     return 0;
