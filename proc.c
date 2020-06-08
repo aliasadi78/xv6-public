@@ -532,3 +532,36 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+void
+procinfo(struct proc_info * sproclist)
+{
+    acquire(&ptable.lock);
+    int pidx = 0;
+    struct proc *p;
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+    {
+        if (p->state == RUNNING || p->state == RUNNABLE)
+        {
+            (sproclist + pidx)->memsize = (int)(p->sz);
+            (sproclist + pidx)->pid = (int)(p->pid);
+            pidx++;
+        }
+    }
+    release(&ptable.lock);
+    int i, key, j;
+    for (i = 1; i < pidx; i++) {
+        key = (sproclist + i) -> memsize;
+        j = i - 1;
+
+        /* Move elements of arr[0..i-1], that are
+          greater than key, to one position ahead
+          of their current position */
+        while (j >= 0 && (sproclist + j)->memsize > key) {
+            *(sproclist + j + 1) = *(sproclist + j);
+            j = j - 1;
+        }
+        (sproclist + j + 1) -> memsize = key;
+    }
+    return;
+}
