@@ -89,7 +89,7 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
-
+// function
 int
 sys_pinfo(void)
 {

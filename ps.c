@@ -2,7 +2,7 @@
 #include "stat.h"
 #include "user.h"
 #include "param.h"
-
+                     //test programm
 //int
 //main(int argc,char *argv[])
 //{

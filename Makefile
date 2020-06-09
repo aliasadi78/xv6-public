@@ -183,7 +183,7 @@ UPROGS=\
 	_zombie\
 	_ps\
 	_pinf\
-
+ //add test programm to makefile
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)
 

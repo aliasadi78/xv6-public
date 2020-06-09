@@ -532,6 +532,8 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+/// function system call
 void
 procinfo(struct proc_info * sproclist)
 {
@@ -540,7 +542,7 @@ procinfo(struct proc_info * sproclist)
     struct proc *p;
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
     {
-        if (p->state == RUNNING || p->state == RUNNABLE)
+        if (p->state == RUNNING || p->state == RUNNABLE)     // check state p
         {
             (sproclist + pidx)->memsize = (int)(p->sz);
             (sproclist + pidx)->pid = (int)(p->pid);

@@ -9,7 +9,7 @@ struct spinlock;
 struct sleeplock;
 struct stat;
 struct superblock;
-struct proc_info{
+struct proc_info{              // struct proc_info
     int pid;
     int memsize;
 };
@@ -123,7 +123,7 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
-void            procinfo(struct proc_info *);
+void            procinfo(struct proc_info *);     // add function
 
 // swtch.S
 void            swtch(struct context**, struct context*);
