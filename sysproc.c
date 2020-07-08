@@ -89,3 +89,16 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+//new systemcall for part1
+int
+sys_waitx(void){
+    int *wtime;
+    int *rtime;
+
+    if (argptr(0, (void*)&wtime, sizeof(*wtime)) < 0 || argptr(1, (void *)&rtime, sizeof(*rtime)) < 0){
+        return -1;
+    }
+
+    return waitx(wtime, rtime);
+}
