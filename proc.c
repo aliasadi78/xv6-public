@@ -88,7 +88,7 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
-
+  p->priority = 60;       //set default priority for part2
   release(&ptable.lock);
 
   // Allocate kernel stack.
