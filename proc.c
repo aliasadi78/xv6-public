@@ -538,6 +538,7 @@ procdump(void)
   }
 }
 
+//part1
 int
 waitx(int *wtime, int *rtime)
 {
@@ -588,4 +589,27 @@ waitx(int *wtime, int *rtime)
         // Wait for children to exit.  (See wakeup1 call in proc_exit.)
         sleep(curproc, &ptable.lock);   //DOC: wait-sleep
     }
+}
+
+//change priority systemcall for part2
+int
+set_priority(int priority)
+{
+    struct proc *curproc = myproc();
+    int old_priority = curproc->priority;
+    //check priority in range[0:100]
+    if (priority > 100 || priority < 0){
+        return -1;
+    }
+    acquire(&ptable.lock);
+    old_priority = curproc->priority;
+    curproc->priority = priority;
+    if(old_priority > priority){
+        //call yield systemcall for rescheduling
+        release(&ptable.lock);
+        yield();
+        return old_priority;
+    }
+    release(&ptable.lock);
+    return old_priority;
 }
