@@ -112,6 +112,11 @@ found:
   memset(p->context, 0, sizeof *p->context);
   p->context->eip = (uint)forkret;
 
+  p->stime = ticks;      //set creation time for part1
+  p->etime = 0;           //set end time
+  p->iotime = 0;          //set io time
+  p->rtime = 0;           //set run time
+
   return p;
 }
 
@@ -531,4 +536,56 @@ procdump(void)
     }
     cprintf("\n");
   }
+}
+
+int
+waitx(int *wtime, int *rtime)
+{
+    struct proc *p;
+    int  havekids, pid;
+    struct proc *curproc = myproc();
+
+    acquire(&ptable.lock);
+    for (;;) {
+        //scan through table looking for exited children
+        havekids = 0;
+        for (p= ptable.proc; p < &ptable.proc[NPROC]; p++) {
+            if (p->parent != curproc)
+                continue;
+            havekids = 1;
+            if (p->state == ZOMBIE){
+                //Found one
+                pid = p->pid;
+                kfree(p->kstack);
+                p->kstack = 0;
+                freevm(p->pgdir);
+                p->pid = 0;
+                p->parent = 0;
+                p->nama[0] = 0;
+                p->killed = 0;
+                p->state = UNUSED;
+
+                *wtime = p->etime - p->stime - p->rtime - p->iotime;    // Waiting_time = End_time - Creation_time - Run_time - IO_time
+                *rtime = p->rtime;    //Run time
+
+                p->stime = 0; // Reinitialising creation time of process
+                p->etime = 0; // Reinitialising end time of process
+                p->iotime = 0;// Reinitialising iotime
+                p->rtime = 0; // Reinitialising run time of process
+
+                cprintf("\nVisit io: %d, e: %d, s: %d, r: %d", p->iotime, p->etime, p->stime, p-> rtime);
+                release(&ptable.lock);
+
+                return pid;
+            }
+        }
+
+        // No point waiting if we don't have any children.
+        if (!havekids || curproc->killed) {
+            release(&ptable.lock);
+            return -1;
+        }
+        // Wait for children to exit.  (See wakeup1 call in proc_exit.)
+        sleep(curproc, &ptable.lock);   //DOC: wait-sleep
+    }
 }
