@@ -112,3 +112,9 @@ sys_set_priority(void)
         return -1;
     return set_priority(priority);
 }
+//part3
+//new systemcall for Question3
+int
+sys_nice(void){
+    return nice();
+}

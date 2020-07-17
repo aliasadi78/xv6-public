@@ -122,6 +122,7 @@ void            wakeup(void*);
 void            yield(void);
 int              waitx(int *wtime, int *rtime); //function waitx(int *wtime, int *rtime) for part1
 int             set_priority(int priority);    // priority for part2
+int             nice(void);//for Question3
 
 // swtch.S
 void            swtch(struct context**, struct context*);

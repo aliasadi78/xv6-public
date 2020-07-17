@@ -31,3 +31,4 @@ SYSCALL(sleep)
 SYSCALL(uptime)
 SYSCALL(waitx) // SYSCALL for part1
 SYSCALL(set_priority) //SYSCALL for part2
+SYSCALL(nice)   // for Question 3

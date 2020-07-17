@@ -55,7 +55,8 @@ struct proc {
   int  iotime;    //process io time     part1
   int  rtime;     //process run time     part1
 
-    int priority;		       // add priority for part2
+  int priority;		       // add priority for part2
+  int priority_level;		// priority_level in range [1 , 2 , 3 ] for scheduler for Question3
 };
 
 // Process memory is laid out contiguously, low addresses first:

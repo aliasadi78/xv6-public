@@ -105,6 +105,7 @@ extern int sys_write(void);
 extern int sys_uptime(void);
 extern  int sys_waitx(void);  // extern function part1 برای جدا جدا کامپایل شدن و سریع تر شدن فرایند کامپایل
 extern int sys_set_priority(void); // part2
+extern int sys_nice(void); //part3
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -130,6 +131,7 @@ static int (*syscalls[])(void) = {
 [SYS_close]   sys_close,
 [SYS_waitx]   sys_waitx(),    //part1
 [SYS_set_priority]  sys_set_priority, //part2
+[SYS_nice]    sys_nice,  //part3
 };
 
 void

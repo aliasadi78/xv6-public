@@ -116,7 +116,7 @@ found:
   p->etime = 0;           //set end time
   p->iotime = 0;          //set io time
   p->rtime = 0;           //set run time
-
+  p->priority_level = 1 ; //set hight priority level in defualt for Question3
   return p;
 }
 
@@ -612,4 +612,21 @@ set_priority(int priority)
     }
     release(&ptable.lock);
     return old_priority;
+}
+
+//new systemcall to decrease priority level for Question3
+int
+nice(void){
+    struct proc *curproc = myproc();
+
+    acquire(&ptable.lock);
+    if(curproc->priority_level < 3){
+        curproc->priority_level += 1;
+        release(&ptable.lock);
+        return 0;
+    }
+    else{
+        release(&ptable.lock);
+        return -1;
+    }
 }

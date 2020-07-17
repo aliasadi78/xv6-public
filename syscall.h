@@ -22,3 +22,4 @@
 #define SYS_close  21
 #define SYS_waitx 22   //define syscall for part1
 #define SYS_set_priority 22 //define for part2
+#define SYS_nice   23 //part3
